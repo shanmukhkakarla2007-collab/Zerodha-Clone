@@ -1,0 +1,55 @@
+#portal{
+    display: flex;
+    justify-content: space-between;
+}
+#support{
+    background-color: #387ed1;
+    color: white;
+}
+#support a{
+    color: white;
+}
+#support input {
+    width: 100%;
+    border-radius: 10px;
+    padding: 1.4rem;
+    border: none;
+    font-size: 1.3rem;
+}
+
+/* //signup */
+
+.signup-container{
+   display: flex;
+   justify-content: center;
+   margin-top: 3rem;
+}
+.form{
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    border-radius: 0.5rem;
+    background-color:lightgray;
+}
+.form form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.form form input{
+    border: none;
+    background-color:whitesmoke ;
+    border-radius:  0.5rem;
+    margin: 0.3rem 0rem 0.6rem 0rem;
+    padding: 0.2rem 0rem;
+}
+.form form label{
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+#password{
+    margin-bottom:0rem;
+}
