@@ -15,6 +15,8 @@ const cookieParser = require("cookie-parser");
 const { logincheck, signupvalidation, loginvalidation, buyvalidation, sellvalidation } = require('./middlewares');
 const wrapAsync=require('./utils/wrapAsync');
 const ExpressError=require("./utils/expressError");
+const PORT = process.env.PORT || 8000;
+
 
 app.use(express.json());
 const allowedOrigins = [
@@ -300,6 +302,8 @@ app.use((err, req, res, next) => {
     });
 })
 
-app.listen(8000, () => {
-    console.log("working");
-})
+
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
