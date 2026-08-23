@@ -56,7 +56,7 @@ function Pannel({ pannel, stock, setstock, setorders, orders, H, setholdings, se
       price: stock.price,
       mode: "BUY"
     }
-    axios.post("http://localhost:8000/order/buy", { neworder: order }, { withCredentials: true })
+    axios.post("https://zerodha-clone-backend-chwm.onrender.com/order/buy", { neworder: order }, { withCredentials: true })
       .then((response) => {
         pannel(false);
         setorders(prev => [
@@ -138,7 +138,7 @@ function Pannelsell({ pannel, stock, setstock, setorders, orders, H, setholdings
       price: stock.price,
       mode: "SELL"
     }
-    await axios.post("http://localhost:8000/order/sell", { neworder: order }, { withCredentials: true })
+    await axios.post("https://zerodha-clone-backend-chwm.onrender.com/order/sell", { neworder: order }, { withCredentials: true })
       .then((response) => {
         pannel(false);
         setorders(prev => [

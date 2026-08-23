@@ -8,7 +8,7 @@ function Orders({ orders, setorders }) {
 
 
     useEffect(() => {
-        axios.get('http://localhost:8000/order', { withCredentials: true })
+        axios.get('https://zerodha-clone-backend-chwm.onrender.com/order', { withCredentials: true })
             .then((response) => {
                 setorders(response.data);
             })

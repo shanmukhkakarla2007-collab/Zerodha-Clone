@@ -7,27 +7,7 @@ import { toast } from "react-toastify";
 
 function Summary({ user, holdings, setuser, setholdings }) {
     useEffect(() => {
-        // axios.get("http://localhost:8000/account", { withCredentials: true })
-        //     .then((response) => {
-        //         setuser(response.data);
-        //     })
-        //     .catch((error) => {
-        //         const status = error.response?.status;
-        //         if (status === 401) {
-        //             toast.error(
-        //                 error.response?.data?.message || "Please login first"
-        //             );
-        //             setTimeout(() => {
-        //                 window.location.href = "http://localhost:5173/login";
-        //             }, 1500);
-        //             return;
-        //         }
-        //         toast.error(
-        //             error.response?.data?.message ||
-        //             "Unable to load summary"
-        //         );
-        //     });
-        axios.get("http://localhost:8000/holdings", { withCredentials: true })
+        axios.get("https://zerodha-clone-backend-chwm.onrender.com/holdings", { withCredentials: true })
             .then((response) => {
                 setholdings(response.data);
             })

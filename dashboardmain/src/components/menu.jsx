@@ -18,7 +18,7 @@ function Menu({ user, setuser }) {
     }
     const classmenu = "menu1";
     function logout() {
-        axios.get("http://localhost:8000/logout")
+        axios.get("https://zerodha-clone-backend-chwm.onrender.com/logout")
             .then((response) => {
                 window.location.href = "http://localhost:5173/?message=Logoutsuccessful&type=success";
             })

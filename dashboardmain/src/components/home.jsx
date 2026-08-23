@@ -19,7 +19,7 @@ function Home() {
         window.location.pathname
       );
     }
-    axios.get("http://localhost:8000/account", { withCredentials: true })
+    axios.get("https://zerodha-clone-backend-chwm.onrender.com/account", { withCredentials: true })
       .then((response) => {
         setuser(response.data);
       })

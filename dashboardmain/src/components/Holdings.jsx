@@ -8,7 +8,7 @@ import { watchlist as stocks } from '../data/data';
 
 function Holdings({ H, setholdings }) {
     useEffect(() => {
-        axios.get('http://localhost:8000/holdings', { withCredentials: true })
+        axios.get('https://zerodha-clone-backend-chwm.onrender.com/holdings', { withCredentials: true })
             .then((response) => {
                 setholdings(response.data);
             })

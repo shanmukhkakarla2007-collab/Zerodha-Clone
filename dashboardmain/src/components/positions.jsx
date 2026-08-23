@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function Positions() {
     const [P, setpositions] = useState([]);
     useEffect(() => {
-        axios.get("http://localhost:8000/positions", { withCredentials: true })
+        axios.get("https://zerodha-clone-backend-chwm.onrender.com/positions", { withCredentials: true })
             .then((response) => {
                 setpositions(response.data);
             })

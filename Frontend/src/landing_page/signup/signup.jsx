@@ -19,7 +19,7 @@ function Signup() {
             event.stopPropagation();
         }
         else {
-            axios.post("http://localhost:8000/signup", { username, password, email }, { withCredentials: true })
+            axios.post("https://zerodha-clone-backend-chwm.onrender.com/signup", { username, password, email }, { withCredentials: true })
                 .then((response) => {
                     console.log("signup successful");
                     window.location.href = "http://localhost:5174/?message=Signupsuccessful&type=success";
