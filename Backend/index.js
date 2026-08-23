@@ -245,11 +245,12 @@ app.post("/signup", signupvalidation, wrapAsync(async (req, res, next) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         user.password = hashedPassword;
         await user.save();
-        res.cookie("token", token(user._id, user.username, {
+        res.cookie("token", token(user._id, user.username), {
             httpOnly: true,
             secure: true,
-            sameSite: "none"
-        }));
+            sameSite: "none",
+            maxAge: 60 * 60 * 1000
+        });
         return res.json({
             message: "SIGNUP SUCCESSFULL",
         })
@@ -261,11 +262,12 @@ app.post("/login", loginvalidation, wrapAsync(async (req, res, next) => {
     if (usercheck) {
         const passwordcheck = await bcrypt.compare(password, usercheck.password);
         if (passwordcheck) {
-            res.cookie("token", token(usercheck._id, usercheck.username, {
+            res.cookie("token", token(usercheck._id), usercheck.username, {
                 httpOnly: true,
                 secure: true,
-                sameSite: "none"
-            }));
+                sameSite: "none",
+                maxAge: 60 * 60 * 1000
+            });
             return res.json({
                 message: "LOGIN SUCCESSFULL"
             })
