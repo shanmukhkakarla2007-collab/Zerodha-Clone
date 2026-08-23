@@ -284,7 +284,8 @@ app.get("/logout", wrapAsync(async (req, res, next) => {
     res.clearCookie("token", {
         httpOnly: true,
         secure: true,
-        sameSite: "none"
+        sameSite: "none",
+        path: "/"
     });
     res.json({
         message: "LOGOUT SUCCESSFULL"
