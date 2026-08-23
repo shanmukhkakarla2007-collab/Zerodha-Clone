@@ -17,7 +17,7 @@ function Login() {
         else {
             axios.post("https://zerodha-clone-backend-chwm.onrender.com/login", { username, password }, { withCredentials: true })
                 .then((response) => {
-                    window.location.href = "http://localhost:5174/?message=Loginsuccessful&type=success";
+                    window.location.href = "https://zerodha-clone-dashboard-2wcj.onrender.com/?message=Loginsuccessful&type=success";
                 })
                 .catch((error)=>{
                     toast.error(error.response.data.message);

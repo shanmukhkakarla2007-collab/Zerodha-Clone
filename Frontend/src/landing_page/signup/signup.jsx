@@ -22,7 +22,7 @@ function Signup() {
             axios.post("https://zerodha-clone-backend-chwm.onrender.com/signup", { username, password, email }, { withCredentials: true })
                 .then((response) => {
                     console.log("signup successful");
-                    window.location.href = "http://localhost:5174/?message=Signupsuccessful&type=success";
+                    window.location.href = "https://zerodha-clone-dashboard-2wcj.onrender.com/?message=Signupsuccessful&type=success";
                 })
                 .catch((error) => {
                     toast.error(error.response?.data?.message || error.message);

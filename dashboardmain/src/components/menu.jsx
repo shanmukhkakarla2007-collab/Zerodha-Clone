@@ -20,7 +20,7 @@ function Menu({ user, setuser }) {
     function logout() {
         axios.get("https://zerodha-clone-backend-chwm.onrender.com/logout")
             .then((response) => {
-                window.location.href = "http://localhost:5173/?message=Logoutsuccessful&type=success";
+                window.location.href = "https://zerodha-clone-frontend-oqzt.onrender.com/?message=Logoutsuccessful&type=success";
             })
             .catch((error) => {
                 toast.error("LOGOUT IS UNSUCCESSFULL");

@@ -18,7 +18,7 @@ function Summary({ user, holdings, setuser, setholdings }) {
                         error.response?.data?.message || "Please login first"
                     );
                     setTimeout(() => {
-                        window.location.href = "http://localhost:5173/login";
+                        window.location.href = "https://zerodha-clone-frontend-oqzt.onrender.com/login";
                     }, 1500);
                     return;
                 }
