@@ -13,8 +13,8 @@ const bcrypt = require('bcrypt');
 const { token } = require('./token');
 const cookieParser = require("cookie-parser");
 const { logincheck, signupvalidation, loginvalidation, buyvalidation, sellvalidation } = require('./middlewares');
-const wrapAsync=require('./utils/wrapAsync');
-const ExpressError=require("./utils/expressError");
+const wrapAsync = require('./utils/wrapAsync');
+const ExpressError = require("./utils/expressError");
 const PORT = process.env.PORT || 8000;
 
 
@@ -83,15 +83,15 @@ app.get("/resetpositions", async (req, res) => {
     );
     res.send("reseted all positions");
 });
-app.get("/holdings", logincheck, wrapAsync(async (req, res,next) => {
+app.get("/holdings", logincheck, wrapAsync(async (req, res, next) => {
     const allholdings = await holdingsmodel.find({ owner: req.user.userId });
     res.json(allholdings);
 }));
-app.get("/positions", logincheck, wrapAsync(async (req, res,next) => {
+app.get("/positions", logincheck, wrapAsync(async (req, res, next) => {
     const allpositions = await positionsmodel.find({ owner: req.user.userId });
     res.json(allpositions);
 }));
-app.post("/order/buy", logincheck, buyvalidation, wrapAsync(async (req, res,next) => {
+app.post("/order/buy", logincheck, buyvalidation, wrapAsync(async (req, res, next) => {
     const { neworder } = req.body;
     const order = new ordersmodel({ ...neworder, owner: req.user.userId });
     const amount = Number(neworder.qty) * Number(neworder.price);
@@ -160,7 +160,7 @@ app.post("/order/buy", logincheck, buyvalidation, wrapAsync(async (req, res,next
         }
     }
 }));
-app.post("/order/sell", logincheck, sellvalidation, wrapAsync(async (req, res,next) => {
+app.post("/order/sell", logincheck, sellvalidation, wrapAsync(async (req, res, next) => {
     let { neworder } = req.body;
     const order = new ordersmodel({ ...neworder, owner: req.user.userId });
     const user = await usersmodel.findOne({ _id: req.user.userId });
@@ -212,7 +212,7 @@ app.post("/order/sell", logincheck, sellvalidation, wrapAsync(async (req, res,ne
             return res.status(201).json({
                 message: "REJECTED",
                 order: order,
-                message2:"ORDER WAS REJECTED BECAUSE OF INSUFFICENT HOLDING QUANTITY"
+                message2: "ORDER WAS REJECTED BECAUSE OF INSUFFICENT HOLDING QUANTITY"
             });
         }
     }
@@ -222,20 +222,20 @@ app.post("/order/sell", logincheck, sellvalidation, wrapAsync(async (req, res,ne
         return res.status(201).json({
             message: "REJECTED",
             order: order,
-            message2:"ORDER WAS REJECTED BECAUSE YOU SHOULD OWN A STOCK TO SELL IT"
+            message2: "ORDER WAS REJECTED BECAUSE YOU SHOULD OWN A STOCK TO SELL IT"
         });
     }
 
 }));
-app.get("/order", logincheck, wrapAsync(async (req, res,next) => {
+app.get("/order", logincheck, wrapAsync(async (req, res, next) => {
     const orders = await ordersmodel.find({ owner: req.user.userId });
     res.json(orders);
 }));
-app.post("/signup", signupvalidation, wrapAsync(async (req, res,next) => {
+app.post("/signup", signupvalidation, wrapAsync(async (req, res, next) => {
     const { username, password, email } = req.body;
     const usercheck = await usersmodel.findOne({ $or: [{ username: username }, { email: email }] });
     if (usercheck) {
-        return next(new ExpressError(401,"USERNAME IS ALREADY AVAILABLE"));
+        return next(new ExpressError(401, "USERNAME IS ALREADY AVAILABLE"));
     }
     else {
         const user = new usersmodel({
@@ -245,38 +245,50 @@ app.post("/signup", signupvalidation, wrapAsync(async (req, res,next) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         user.password = hashedPassword;
         await user.save();
-        res.cookie("token", token(user._id, user.username));
+        res.cookie("token", token(user._id, user.username, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
+        }));
         return res.json({
             message: "SIGNUP SUCCESSFULL",
         })
     }
 }));
-app.post("/login", loginvalidation, wrapAsync(async (req, res,next) => {
+app.post("/login", loginvalidation, wrapAsync(async (req, res, next) => {
     const { username, password } = req.body;
     const usercheck = await usersmodel.findOne({ username: username });
-    if(usercheck) {
+    if (usercheck) {
         const passwordcheck = await bcrypt.compare(password, usercheck.password);
-        if(passwordcheck){
-            res.cookie("token", token(usercheck._id, usercheck.username));
+        if (passwordcheck) {
+            res.cookie("token", token(usercheck._id, usercheck.username, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "none"
+            }));
             return res.json({
                 message: "LOGIN SUCCESSFULL"
             })
         }
-        else{
-            return next(new ExpressError(401,"INVALID USERNAME OR PASSWORD"));
+        else {
+            return next(new ExpressError(401, "INVALID USERNAME OR PASSWORD"));
         }
     }
-    else{
-        return next(new ExpressError(401,"YOU SHOULD SIGNUP FIRST"));
+    else {
+        return next(new ExpressError(401, "YOU SHOULD SIGNUP FIRST"));
     }
 }));
-app.get("/logout", wrapAsync(async (req, res,next) => {
-    res.clearCookie("token");
+app.get("/logout", wrapAsync(async (req, res, next) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none"
+    });
     res.json({
         message: "LOGOUT SUCCESSFULL"
     })
 }));
-app.get("/account", logincheck, wrapAsync(async (req, res,next) => {
+app.get("/account", logincheck, wrapAsync(async (req, res, next) => {
 
     console.log("ACCOUNT REQUEST");
     console.log("USER:", req.user);
