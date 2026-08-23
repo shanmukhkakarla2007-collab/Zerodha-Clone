@@ -262,7 +262,7 @@ app.post("/login", loginvalidation, wrapAsync(async (req, res, next) => {
     if (usercheck) {
         const passwordcheck = await bcrypt.compare(password, usercheck.password);
         if (passwordcheck) {
-            res.cookie("token", token(usercheck._id), usercheck.username, {
+            res.cookie("token", token(usercheck._id, usercheck.username), {
                 httpOnly: true,
                 secure: true,
                 sameSite: "none",
