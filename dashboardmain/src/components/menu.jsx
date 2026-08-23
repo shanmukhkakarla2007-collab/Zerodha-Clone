@@ -18,7 +18,9 @@ function Menu({ user, setuser }) {
     }
     const classmenu = "menu1";
     function logout() {
-        axios.get("https://zerodha-clone-backend-chwm.onrender.com/logout")
+        axios.get("https://zerodha-clone-backend-chwm.onrender.com/logout", {
+            withCredentials: true
+        })
             .then((response) => {
                 window.location.href = "https://zerodha-clone-frontend-oqzt.onrender.com/?message=Logoutsuccessful&type=success";
             })
