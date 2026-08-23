@@ -20,8 +20,8 @@ const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
 const allowedOrigins = [
-    "http://localhost:5173",
-    "http://localhost:5174"
+    "https://zerodha-clone-frontend-oqzt.onrender.com",
+    "https://zerodha-clone-backend-chwm.onrender.com"
 ];
 app.use(cors({
     origin: (origin, callback) => {
